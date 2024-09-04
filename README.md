@@ -6,6 +6,10 @@ Health App is implemented around the Healthkit framework utilizing SwiftUI.
 
 This app uses Healthkit framework mainly where the health data is represented with Swift Charts.
 
+## Frameworks Used
+- [HealthKit](https://developer.apple.com/documentation/healthkit/)
+- [Swift Charts](https://developer.apple.com/documentation/charts)
+
 ### Installation
 
 Clone the project
