@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */; };
-		A15D1C182C88BB6D00A115DF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D1C172C88BB6D00A115DF /* ContentView.swift */; };
+		A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */; };
 		A15D1C1A2C88BB6E00A115DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15D1C192C88BB6E00A115DF /* Assets.xcassets */; };
 		A15D1C1D2C88BB6E00A115DF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15D1C1C2C88BB6E00A115DF /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		A15D1C122C88BB6D00A115DF /* Health App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Health App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Health_AppApp.swift; sourceTree = "<group>"; };
-		A15D1C172C88BB6D00A115DF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRequestView.swift; sourceTree = "<group>"; };
 		A15D1C192C88BB6E00A115DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A15D1C1C2C88BB6E00A115DF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */,
-				A15D1C172C88BB6D00A115DF /* ContentView.swift */,
+				A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */,
 				A15D1C192C88BB6E00A115DF /* Assets.xcassets */,
 				A15D1C1B2C88BB6E00A115DF /* Preview Content */,
 			);
@@ -137,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A15D1C182C88BB6D00A115DF /* ContentView.swift in Sources */,
+				A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */,
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
