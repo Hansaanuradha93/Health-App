@@ -28,7 +28,15 @@ struct PermissionRequestView: View {
             
             Spacer()
             
-            Button("Connect HealthKit") {}
+            Button("Connect HealthKit") {
+                HealthKitManager.shared.requestHealthKitAuthorization { success, error in
+                    if success {
+                        print("🟢 HealthKit authorization granted")
+                    } else {
+                        print("🔴 HealthKit authorization denied: \(String(describing: error))")
+                    }
+                }
+            }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
         }
