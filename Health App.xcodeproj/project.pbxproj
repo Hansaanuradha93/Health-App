@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A15B30032C8B91F8007F28B6 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B30022C8B91F8007F28B6 /* HealthKitManager.swift */; };
+		A15B30082C8B936D007F28B6 /* PermissionRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15B30072C8B936D007F28B6 /* PermissionRequestViewModel.swift */; };
 		A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */; };
 		A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */; };
 		A15D1C1A2C88BB6E00A115DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15D1C192C88BB6E00A115DF /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* Begin PBXFileReference section */
 		A15B30012C8B9175007F28B6 /* Health App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Health App.entitlements"; sourceTree = "<group>"; };
 		A15B30022C8B91F8007F28B6 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		A15B30072C8B936D007F28B6 /* PermissionRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRequestViewModel.swift; sourceTree = "<group>"; };
 		A15D1C122C88BB6D00A115DF /* Health App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Health App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Health_AppApp.swift; sourceTree = "<group>"; };
 		A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRequestView.swift; sourceTree = "<group>"; };
@@ -43,6 +45,34 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		A15B30042C8B9314007F28B6 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				A15B30062C8B9353007F28B6 /* Permission Request View */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		A15B30052C8B9327007F28B6 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A15B30012C8B9175007F28B6 /* Health App.entitlements */,
+				A15D1C192C88BB6E00A115DF /* Assets.xcassets */,
+				A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */,
+				A15D1C1B2C88BB6E00A115DF /* Preview Content */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		A15B30062C8B9353007F28B6 /* Permission Request View */ = {
+			isa = PBXGroup;
+			children = (
+				A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */,
+				A15B30072C8B936D007F28B6 /* PermissionRequestViewModel.swift */,
+			);
+			path = "Permission Request View";
+			sourceTree = "<group>";
+		};
 		A15D1C092C88BB6D00A115DF = {
 			isa = PBXGroup;
 			children = (
@@ -62,12 +92,9 @@
 		A15D1C142C88BB6D00A115DF /* Health App */ = {
 			isa = PBXGroup;
 			children = (
-				A15B30012C8B9175007F28B6 /* Health App.entitlements */,
+				A15B30042C8B9314007F28B6 /* Screens */,
 				A15B30002C8B8F87007F28B6 /* Managers */,
-				A15D1C152C88BB6D00A115DF /* Health_AppApp.swift */,
-				A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */,
-				A15D1C192C88BB6E00A115DF /* Assets.xcassets */,
-				A15D1C1B2C88BB6E00A115DF /* Preview Content */,
+				A15B30052C8B9327007F28B6 /* App */,
 			);
 			path = "Health App";
 			sourceTree = "<group>";
@@ -152,6 +179,7 @@
 			files = (
 				A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */,
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,
+				A15B30082C8B936D007F28B6 /* PermissionRequestViewModel.swift in Sources */,
 				A15B30032C8B91F8007F28B6 /* HealthKitManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct PermissionRequestView: View {
+    
+    @StateObject private var viewModel = PermissionRequestViewModel()
+    
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 40) {
@@ -29,16 +32,10 @@ struct PermissionRequestView: View {
             Spacer()
             
             Button("Connect HealthKit") {
-                HealthKitManager.shared.requestHealthKitAuthorization { success, error in
-                    if success {
-                        print("🟢 HealthKit authorization granted")
-                    } else {
-                        print("🔴 HealthKit authorization denied: \(String(describing: error))")
-                    }
-                }
+                viewModel.requestHealthKitAuthorization()
             }
-                .buttonStyle(.borderedProminent)
-                .tint(.red)
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
         }
         .padding(30)
     }
