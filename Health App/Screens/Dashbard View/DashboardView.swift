@@ -61,31 +61,6 @@ struct WeightView: View {
     }
 }
 
-struct EmptyView: View {
-    
-    var icon: String
-    var title: String
-    var subtitle: String
-    
-    var body: some View {
-        VStack(spacing: 8) {
-            Image(systemName: icon)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 60, height: 60)
-            
-            Text(title)
-                .font(.title3)
-                .fontWeight(.medium)
-            
-            Text(subtitle)
-                .font(.subheadline)
-                .fontWeight(.regular)
-        }
-        .foregroundStyle(Color(.systemGray3))
-    }
-}
-
 
 struct CardView: View {
     var title: String

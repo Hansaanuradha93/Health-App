@@ -16,6 +16,7 @@
 		A15E2D892C8C2EF9003CA740 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D882C8C2EF9003CA740 /* DashboardView.swift */; };
 		A15E2D8C2C8C3071003CA740 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */; };
 		A15E2D8E2C8C3335003CA740 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D8D2C8C3335003CA740 /* DashboardViewModel.swift */; };
+		A15E2D922C8C40E4003CA740 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D912C8C40E4003CA740 /* EmptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A15E2D882C8C2EF9003CA740 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		A15E2D8D2C8C3335003CA740 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		A15E2D912C8C40E4003CA740 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		A15D1C142C88BB6D00A115DF /* Health App */ = {
 			isa = PBXGroup;
 			children = (
+				A15E2D8F2C8C40C5003CA740 /* Views */,
 				A15B30042C8B9314007F28B6 /* Screens */,
 				A15E2D8A2C8C3060003CA740 /* Utils */,
 				A15B30002C8B8F87007F28B6 /* Managers */,
@@ -130,6 +133,22 @@
 				A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		A15E2D8F2C8C40C5003CA740 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A15E2D902C8C40CC003CA740 /* Empty View */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A15E2D902C8C40CC003CA740 /* Empty View */ = {
+			isa = PBXGroup;
+			children = (
+				A15E2D912C8C40E4003CA740 /* EmptyView.swift */,
+			);
+			path = "Empty View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,6 +225,7 @@
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,
 				A15E2D892C8C2EF9003CA740 /* DashboardView.swift in Sources */,
 				A15B30082C8B936D007F28B6 /* PermissionRequestViewModel.swift in Sources */,
+				A15E2D922C8C40E4003CA740 /* EmptyView.swift in Sources */,
 				A15E2D8C2C8C3071003CA740 /* NavigationDestination.swift in Sources */,
 				A15B30032C8B91F8007F28B6 /* HealthKitManager.swift in Sources */,
 				A15E2D8E2C8C3335003CA740 /* DashboardViewModel.swift in Sources */,
