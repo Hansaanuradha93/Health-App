@@ -13,6 +13,8 @@
 		A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */; };
 		A15D1C1A2C88BB6E00A115DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15D1C192C88BB6E00A115DF /* Assets.xcassets */; };
 		A15D1C1D2C88BB6E00A115DF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15D1C1C2C88BB6E00A115DF /* Preview Assets.xcassets */; };
+		A15E2D892C8C2EF9003CA740 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D882C8C2EF9003CA740 /* DashboardView.swift */; };
+		A15E2D8C2C8C3071003CA740 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		A15D1C172C88BB6D00A115DF /* PermissionRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRequestView.swift; sourceTree = "<group>"; };
 		A15D1C192C88BB6E00A115DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A15D1C1C2C88BB6E00A115DF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A15E2D882C8C2EF9003CA740 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,7 @@
 		A15B30042C8B9314007F28B6 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				A15E2D872C8C2EEB003CA740 /* Dashbard View */,
 				A15B30062C8B9353007F28B6 /* Permission Request View */,
 			);
 			path = Screens;
@@ -92,6 +97,7 @@
 		A15D1C142C88BB6D00A115DF /* Health App */ = {
 			isa = PBXGroup;
 			children = (
+				A15E2D8A2C8C3060003CA740 /* Utils */,
 				A15B30042C8B9314007F28B6 /* Screens */,
 				A15B30002C8B8F87007F28B6 /* Managers */,
 				A15B30052C8B9327007F28B6 /* App */,
@@ -105,6 +111,22 @@
 				A15D1C1C2C88BB6E00A115DF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A15E2D872C8C2EEB003CA740 /* Dashbard View */ = {
+			isa = PBXGroup;
+			children = (
+				A15E2D882C8C2EF9003CA740 /* DashboardView.swift */,
+			);
+			path = "Dashbard View";
+			sourceTree = "<group>";
+		};
+		A15E2D8A2C8C3060003CA740 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,7 +201,9 @@
 			files = (
 				A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */,
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,
+				A15E2D892C8C2EF9003CA740 /* DashboardView.swift in Sources */,
 				A15B30082C8B936D007F28B6 /* PermissionRequestViewModel.swift in Sources */,
+				A15E2D8C2C8C3071003CA740 /* NavigationDestination.swift in Sources */,
 				A15B30032C8B91F8007F28B6 /* HealthKitManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
