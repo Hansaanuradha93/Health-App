@@ -13,14 +13,14 @@ final class PermissionRequestViewModel: ObservableObject {
     @Published var isPermissionGranted = false
     
     func requestHealthKitAuthorization() {
-        HealthKitManager.shared.requestHealthKitAuthorization { success, error in
+        HealthKitManager.shared.requestHealthKitReadAuthorization { success, error in
             if success {
-                print("🟢 HealthKit authorization granted")
+                print("🟢 HealthKit read authorization granted")
                 DispatchQueue.main.async {
                     self.isPermissionGranted = true
                 }
             } else {
-                print("🔴 HealthKit authorization denied: \(String(describing: error))")
+                print("🔴 HealthKit read authorization denied: \(String(describing: error))")
                 DispatchQueue.main.async {
                     self.isPermissionGranted = false
                 }

@@ -38,6 +38,7 @@ struct DashboardView: View {
     DashboardView()
 }
 
+// MARK: - StepsView
 struct StepsView: View {
     var body: some View {
         VStack(spacing: 20) {
@@ -49,6 +50,7 @@ struct StepsView: View {
     }
 }
 
+// MARK: - WeightView
 struct WeightView: View {
     var body: some View {
         VStack(spacing: 20) {
