@@ -18,6 +18,7 @@
 		A15E2D8E2C8C3335003CA740 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D8D2C8C3335003CA740 /* DashboardViewModel.swift */; };
 		A15E2D922C8C40E4003CA740 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D912C8C40E4003CA740 /* EmptyView.swift */; };
 		A15E2D952C8C4603003CA740 /* Card View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D942C8C4603003CA740 /* Card View.swift */; };
+		A179B8812C9C932300B79E80 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A179B8802C9C932300B79E80 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		A15E2D8D2C8C3335003CA740 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		A15E2D912C8C40E4003CA740 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		A15E2D942C8C4603003CA740 /* Card View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card View.swift"; sourceTree = "<group>"; };
+		A179B8802C9C932300B79E80 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				A15B30022C8B91F8007F28B6 /* HealthKitManager.swift */,
+				A179B8802C9C932300B79E80 /* Logger.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,
 				A15E2D892C8C2EF9003CA740 /* DashboardView.swift in Sources */,
 				A15B30082C8B936D007F28B6 /* PermissionRequestViewModel.swift in Sources */,
+				A179B8812C9C932300B79E80 /* Logger.swift in Sources */,
 				A15E2D922C8C40E4003CA740 /* EmptyView.swift in Sources */,
 				A15E2D8C2C8C3071003CA740 /* NavigationDestination.swift in Sources */,
 				A15B30032C8B91F8007F28B6 /* HealthKitManager.swift in Sources */,
