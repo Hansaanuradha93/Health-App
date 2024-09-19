@@ -12,6 +12,17 @@ final class HealthKitManager {
     private let healthStore = HKHealthStore()
     
     private init() {}
+    
+    func requestAutorization(write writeTypes: Set<HKSampleType>?, read readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
+        // Request authorization
+        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { [weak self] (success, error) in
+            if success {
+                completion(success, error)
+            } else {
+                self?.requestAutorization(write: writeTypes, read: readTypes, completion: completion)
+            }
+        }
+    }
 
     func requestHealthKitReadAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         // HealthKit read data types
@@ -21,32 +32,26 @@ final class HealthKitManager {
         ]
         
         // Request authorization
-        healthStore.requestAuthorization(toShare: nil, read: readTypes) { (success, error) in
-            completion(success, error)
-        }
+        requestAutorization(write: nil, read: readTypes, completion: completion)
     }
     
-    func requestStepsWriteAuthorization(completion: @escaping (Bool, Error?) -> Void) {
+    func requestWriteAuthorizationForSteps(completion: @escaping (Bool, Error?) -> Void) {
         // HealthKit write data types
         let writeTypes: Set = [
             HKObjectType.quantityType(forIdentifier: .stepCount)!
         ]
         
         // Request authorization
-        healthStore.requestAuthorization(toShare: writeTypes, read: nil) { (success, error) in
-            completion(success, error)
-        }
+        requestAutorization(write: writeTypes, read: writeTypes, completion: completion)
     }
     
-    func requestWeightWriteAuthorization(completion: @escaping (Bool, Error?) -> Void) {
+    func requestWriteAuthorizationForWeight(completion: @escaping (Bool, Error?) -> Void) {
         // HealthKit write data types
         let writeTypes: Set = [
             HKObjectType.quantityType(forIdentifier: .bodyMass)!
         ]
         
         // Request authorization
-        healthStore.requestAuthorization(toShare: writeTypes, read: nil) { (success, error) in
-            completion(success, error)
-        }
+        requestAutorization(write: writeTypes, read: writeTypes, completion: completion)
     }
 }
