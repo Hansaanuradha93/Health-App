@@ -21,8 +21,10 @@ final class PermissionRequestViewModel: ObservableObject {
                 }
             } else {
                 printError(error)
-                self?.isPermissionGranted = false
                 self?.requestHealthKitReadAuthorization()
+                DispatchQueue.main.async {
+                    self?.isPermissionGranted = false
+                }
             }
         }
     }
