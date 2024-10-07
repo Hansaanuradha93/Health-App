@@ -45,6 +45,36 @@ final class HealthKitManager {
     }
 }
 
+// MARK: - Reading Data
+extension HealthKitManager {
+    func getStepsQuery() -> HKStatisticsCollectionQuery {
+        let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+        
+        let (startDate, endDate) = Calendar.current.getLast30Days()
+        
+        return getQuery(from: startDate, till: endDate, with: stepType)
+    }
+    
+    func fetchHealthData(with query: HKStatisticsCollectionQuery, completion: @escaping ([Date: Double]?, Error?) -> Void) {
+        query.initialResultsHandler = { _, result, error in
+            if let statsCollection = result {
+                var dailyData: [Date: Double] = [:]
+                
+                for statistics in statsCollection.statistics() {
+                    let date = statistics.startDate
+                    let data = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
+                    dailyData[date] = data
+                }
+                
+                completion(dailyData, nil)
+            } else {
+                completion(nil, error)
+            }
+        }
+        healthStore.execute(query)
+    }
+}
+
 // MARK: - Helper Methods
 private extension HealthKitManager {
     func requestAutorization(write writeTypes: Set<HKSampleType>?, read readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
@@ -56,5 +86,17 @@ private extension HealthKitManager {
                 self?.requestAutorization(write: writeTypes, read: readTypes, completion: completion)
             }
         }
+    }
+    
+    func getQuery(from startDate: Date, till endDate: Date, with type: HKQuantityType) -> HKStatisticsCollectionQuery {
+        let (startDate, endDate) = Calendar.current.getLast30Days()
+        
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        
+        return HKStatisticsCollectionQuery(quantityType: type,
+                                           quantitySamplePredicate: predicate,
+                                           options: .cumulativeSum,
+                                           anchorDate: Calendar.current.getAnchorDate(for: endDate),
+                                           intervalComponents: DateComponents(day: 1))
     }
 }

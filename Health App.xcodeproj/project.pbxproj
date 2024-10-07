@@ -19,6 +19,7 @@
 		A15E2D922C8C40E4003CA740 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D912C8C40E4003CA740 /* EmptyView.swift */; };
 		A15E2D952C8C4603003CA740 /* Card View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D942C8C4603003CA740 /* Card View.swift */; };
 		A179B8812C9C932300B79E80 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A179B8802C9C932300B79E80 /* Logger.swift */; };
+		A1D8F6CE2CB3CAFE00530A66 /* Calendar Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D8F6CD2CB3CAFE00530A66 /* Calendar Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A15E2D912C8C40E4003CA740 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		A15E2D942C8C4603003CA740 /* Card View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card View.swift"; sourceTree = "<group>"; };
 		A179B8802C9C932300B79E80 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		A1D8F6CD2CB3CAFE00530A66 /* Calendar Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				A15B30042C8B9314007F28B6 /* Screens */,
 				A15E2D8A2C8C3060003CA740 /* Utils */,
 				A15B30002C8B8F87007F28B6 /* Managers */,
+				A1D8F6CC2CB3CAE000530A66 /* Extensions */,
 				A15B30052C8B9327007F28B6 /* App */,
 			);
 			path = "Health App";
@@ -163,6 +166,14 @@
 				A15E2D942C8C4603003CA740 /* Card View.swift */,
 			);
 			path = "Card View";
+			sourceTree = "<group>";
+		};
+		A1D8F6CC2CB3CAE000530A66 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A1D8F6CD2CB3CAFE00530A66 /* Calendar Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +248,7 @@
 			files = (
 				A15E2D952C8C4603003CA740 /* Card View.swift in Sources */,
 				A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */,
+				A1D8F6CE2CB3CAFE00530A66 /* Calendar Extensions.swift in Sources */,
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,
 				A15E2D892C8C2EF9003CA740 /* DashboardView.swift in Sources */,
 				A15B30082C8B936D007F28B6 /* PermissionRequestViewModel.swift in Sources */,
