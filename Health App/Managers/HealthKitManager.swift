@@ -47,31 +47,14 @@ final class HealthKitManager {
 
 // MARK: - Reading Data
 extension HealthKitManager {
-    func getStepsQuery() -> HKStatisticsCollectionQuery {
+    func fetchDailySteps(completion: @escaping ([Date: Double]?, Error?) -> Void) {
         let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         
         let (startDate, endDate) = Calendar.current.getLast30Days()
         
-        return getQuery(from: startDate, till: endDate, with: stepType)
-    }
-    
-    func fetchHealthData(with query: HKStatisticsCollectionQuery, completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        query.initialResultsHandler = { _, result, error in
-            if let statsCollection = result {
-                var dailyData: [Date: Double] = [:]
-                
-                for statistics in statsCollection.statistics() {
-                    let date = statistics.startDate
-                    let data = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
-                    dailyData[date] = data
-                }
-                
-                completion(dailyData, nil)
-            } else {
-                completion(nil, error)
-            }
-        }
-        healthStore.execute(query)
+        let query = getQuery(from: startDate, till: endDate, with: stepType)
+        
+        fetchHealthData(with: query, completion: completion)
     }
 }
 
@@ -98,5 +81,24 @@ private extension HealthKitManager {
                                            options: .cumulativeSum,
                                            anchorDate: Calendar.current.getAnchorDate(for: endDate),
                                            intervalComponents: DateComponents(day: 1))
+    }
+    
+    func fetchHealthData(with query: HKStatisticsCollectionQuery, completion: @escaping ([Date: Double]?, Error?) -> Void) {
+        query.initialResultsHandler = { _, result, error in
+            if let statsCollection = result {
+                var dailyData: [Date: Double] = [:]
+                
+                for statistics in statsCollection.statistics() {
+                    let date = statistics.startDate
+                    let data = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
+                    dailyData[date] = data
+                }
+                
+                completion(dailyData, nil)
+            } else {
+                completion(nil, error)
+            }
+        }
+        healthStore.execute(query)
     }
 }

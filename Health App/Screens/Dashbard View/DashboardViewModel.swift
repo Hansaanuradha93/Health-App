@@ -17,9 +17,7 @@ final class DashboardViewModel: ObservableObject {
     @Published var dailyStepCounts: [Date: Double] = [:]
     
     func fetchSteps() {
-        let stepsQuery = HealthKitManager.shared.getStepsQuery()
-        
-        HealthKitManager.shared.fetchHealthData(with: stepsQuery) { dailyStepCounts, error in
+        HealthKitManager.shared.fetchDailySteps { dailyStepCounts, error in
             if let error {
                 printError(error)
                 return
