@@ -12,17 +12,6 @@ final class HealthKitManager {
     private let healthStore = HKHealthStore()
     
     private init() {}
-    
-    func requestAutorization(write writeTypes: Set<HKSampleType>?, read readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
-        // Request authorization
-        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { [weak self] (success, error) in
-            if success {
-                completion(success, error)
-            } else {
-                self?.requestAutorization(write: writeTypes, read: readTypes, completion: completion)
-            }
-        }
-    }
 
     func requestHealthKitReadAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         // HealthKit read data types
@@ -42,7 +31,7 @@ final class HealthKitManager {
         ]
         
         // Request authorization
-        requestAutorization(write: writeTypes, read: writeTypes, completion: completion)
+        requestAutorization(write: writeTypes, read: nil, completion: completion)
     }
     
     func requestWriteAuthorizationForWeight(completion: @escaping (Bool, Error?) -> Void) {
@@ -52,6 +41,20 @@ final class HealthKitManager {
         ]
         
         // Request authorization
-        requestAutorization(write: writeTypes, read: writeTypes, completion: completion)
+        requestAutorization(write: writeTypes, read: nil, completion: completion)
+    }
+}
+
+// MARK: - Helper Methods
+private extension HealthKitManager {
+    func requestAutorization(write writeTypes: Set<HKSampleType>?, read readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
+        // Request authorization
+        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { [weak self] (success, error) in
+            if success {
+                completion(success, error)
+            } else {
+                self?.requestAutorization(write: writeTypes, read: readTypes, completion: completion)
+            }
+        }
     }
 }
