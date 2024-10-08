@@ -12,6 +12,7 @@ enum DashboardSelectedTab {
     case weight
 }
 
+@MainActor
 final class DashboardViewModel: ObservableObject {
     @Published var selectedTab: DashboardSelectedTab = .steps
     @Published var dailyStepCounts: [Date: Double] = [:]
@@ -24,13 +25,9 @@ final class DashboardViewModel: ObservableObject {
                 return
             }
             
-            guard let dailyStepCounts else {
-                return
-            }
+            guard let dailyStepCounts else { return }
             
-            DispatchQueue.main.async {
-                self.dailyStepCounts = dailyStepCounts
-            }
+            self.dailyStepCounts = dailyStepCounts
         }
     }
     
@@ -41,13 +38,9 @@ final class DashboardViewModel: ObservableObject {
                 return
             }
             
-            guard let dailyWeights else {
-                return
-            }
+            guard let dailyWeights else { return }
             
-            DispatchQueue.main.async {
-                self.dailyWeights = dailyWeights
-            }
+            self.dailyWeights = dailyWeights
         }
     }
 }

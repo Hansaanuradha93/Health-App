@@ -8,6 +8,7 @@
 import SwiftUI
 import HealthKit
 
+@MainActor
 final class PermissionRequestViewModel: ObservableObject {
     
     @Published var isPermissionGranted = false
@@ -16,15 +17,11 @@ final class PermissionRequestViewModel: ObservableObject {
         HealthKitManager.shared.requestReadAuthorization { [weak self] success, error in
             if success {
                 printInfo(with: "HealthKit read authorization granted")
-                DispatchQueue.main.async {
-                    self?.isPermissionGranted = true
-                }
+                self?.isPermissionGranted = true
             } else {
                 printError(error)
                 self?.requestReadAuthorization()
-                DispatchQueue.main.async {
-                    self?.isPermissionGranted = false
-                }
+                self?.isPermissionGranted = false
             }
         }
     }
