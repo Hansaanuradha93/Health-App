@@ -12,7 +12,33 @@ final class HealthKitManager {
     private let healthStore = HKHealthStore()
     
     private init() {}
+}
 
+// MARK: - Reading Data
+extension HealthKitManager {
+    func fetchDailySteps(completion: @escaping ([Date: Double]?, Error?) -> Void) {
+        requestHealthKitReadAuthorization { [weak self] status, _ in
+            guard let self else {
+                return
+            }
+            
+            if status {
+                let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+                
+                let (startDate, endDate) = Calendar.current.getLast30Days()
+                
+                let query = self.getQuery(from: startDate, till: endDate, with: stepType)
+                
+                self.fetchHealthData(with: query, completion: completion)
+                
+                return
+            }
+        }
+    }
+}
+
+// MARK: - Authorization
+extension HealthKitManager {
     func requestHealthKitReadAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         // HealthKit read data types
         let readTypes: Set = [
@@ -42,19 +68,6 @@ final class HealthKitManager {
         
         // Request authorization
         requestAutorization(write: writeTypes, read: nil, completion: completion)
-    }
-}
-
-// MARK: - Reading Data
-extension HealthKitManager {
-    func fetchDailySteps(completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
-        
-        let (startDate, endDate) = Calendar.current.getLast30Days()
-        
-        let query = getQuery(from: startDate, till: endDate, with: stepType)
-        
-        fetchHealthData(with: query, completion: completion)
     }
 }
 
