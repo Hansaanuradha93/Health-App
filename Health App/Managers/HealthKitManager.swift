@@ -1,4 +1,3 @@
-//
 //  HealthKitManager.swift
 //  Health App
 //
@@ -10,121 +9,88 @@ import HealthKit
 final class HealthKitManager {
     static let shared = HealthKitManager()
     private let healthStore = HKHealthStore()
-    
+
     private init() {}
 }
 
-// MARK: - Reading Data
+// MARK: - Public Methods
 extension HealthKitManager {
     func fetchDailySteps(completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        requestHealthKitReadAuthorization { [weak self] status, _ in
-            guard let self,
-                  status,
-                  let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
-                return
-            }
-                        
-            let (startDate, endDate) = Calendar.current.getLast30Days()
-            
-            let query = self.getQuery(from: startDate, till: endDate, with: stepType)
-            
-            self.fetchHealthData(with: query, completion: completion)
-            
-            return
-        }
+        fetchHealthData(for: .stepCount, completion: completion)
     }
     
     func fetchDailyWeights(completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        requestHealthKitReadAuthorization { [weak self] status, _ in
-            guard let self,
-                  status,
-                  let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass) else {
-                return
-            }
-                        
-            let (startDate, endDate) = Calendar.current.getLast30Days()
-
-            let query = self.getQuery(from: startDate, till: endDate, with: weightType)
-
-            self.fetchHealthData(with: query, completion: completion)
-        }
+        fetchHealthData(for: .bodyMass, completion: completion)
     }
-}
 
-// MARK: - Authorization
-extension HealthKitManager {
-    func requestHealthKitReadAuthorization(completion: @escaping (Bool, Error?) -> Void) {
-        // HealthKit read data types
+    func requestReadAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         let readTypes: Set = [
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
             HKObjectType.quantityType(forIdentifier: .bodyMass)!
         ]
-        
-        // Request authorization
-        requestAutorization(write: nil, read: readTypes, completion: completion)
+        requestAuthorization(toWrite: nil, toRead: readTypes, completion: completion)
     }
-    
-    func requestWriteAuthorizationForSteps(completion: @escaping (Bool, Error?) -> Void) {
-        // HealthKit write data types
+
+    func requestWriteAuthorization(for type: HKQuantityTypeIdentifier, completion: @escaping (Bool, Error?) -> Void) {
         let writeTypes: Set = [
-            HKObjectType.quantityType(forIdentifier: .stepCount)!
+            HKObjectType.quantityType(forIdentifier: type)!
         ]
-        
-        // Request authorization
-        requestAutorization(write: writeTypes, read: nil, completion: completion)
-    }
-    
-    func requestWriteAuthorizationForWeight(completion: @escaping (Bool, Error?) -> Void) {
-        // HealthKit write data types
-        let writeTypes: Set = [
-            HKObjectType.quantityType(forIdentifier: .bodyMass)!
-        ]
-        
-        // Request authorization
-        requestAutorization(write: writeTypes, read: nil, completion: completion)
+        requestAuthorization(toWrite: writeTypes, toRead: nil, completion: completion)
     }
 }
 
-// MARK: - Helper Methods
+// MARK: - Private Methods
 private extension HealthKitManager {
-    func requestAutorization(write writeTypes: Set<HKSampleType>?, read readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
-        // Request authorization
-        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { [weak self] (success, error) in
-            if success {
-                completion(success, error)
-            } else {
-                self?.requestAutorization(write: writeTypes, read: readTypes, completion: completion)
+    func fetchHealthData(for identifier: HKQuantityTypeIdentifier, completion: @escaping ([Date: Double]?, Error?) -> Void) {
+        requestReadAuthorization { [weak self] isAuthorized, error in
+            guard let self = self,
+                    isAuthorized,
+                    let quantityType = HKQuantityType.quantityType(forIdentifier: identifier) else {
+                completion(nil, error)
+                return
             }
+            
+            let (startDate, endDate) = Calendar.current.getLast30Days()
+            let query = self.createQuery(for: quantityType, from: startDate, to: endDate)
+            
+            self.executeHealthQuery(query, completion: completion)
         }
     }
     
-    func getQuery(from startDate: Date, till endDate: Date, with type: HKQuantityType) -> HKStatisticsCollectionQuery {
-        let (startDate, endDate) = Calendar.current.getLast30Days()
-        
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        
-        return HKStatisticsCollectionQuery(quantityType: type,
-                                           quantitySamplePredicate: predicate,
-                                           options: .cumulativeSum,
-                                           anchorDate: Calendar.current.getAnchorDate(for: endDate),
-                                           intervalComponents: DateComponents(day: 1))
+    func requestAuthorization(toWrite writeTypes: Set<HKSampleType>?, toRead readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
+        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { success, error in
+            completion(success, error)
+        }
     }
-    
-    func fetchHealthData(with query: HKStatisticsCollectionQuery, completion: @escaping ([Date: Double]?, Error?) -> Void) {
+
+    func createQuery(for quantityType: HKQuantityType, from startDate: Date, to endDate: Date) -> HKStatisticsCollectionQuery {
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        let anchorDate = Calendar.current.getAnchorDate(for: endDate)
+        
+        return HKStatisticsCollectionQuery(
+            quantityType: quantityType,
+            quantitySamplePredicate: predicate,
+            options: .cumulativeSum,
+            anchorDate: anchorDate,
+            intervalComponents: DateComponents(day: 1)
+        )
+    }
+
+    func executeHealthQuery(_ query: HKStatisticsCollectionQuery, completion: @escaping ([Date: Double]?, Error?) -> Void) {
         query.initialResultsHandler = { _, result, error in
-            if let statsCollection = result {
-                var dailyData: [Date: Double] = [:]
-                
-                for statistics in statsCollection.statistics() {
-                    let date = statistics.startDate
-                    let data = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
-                    dailyData[date] = data
-                }
-                
-                completion(dailyData, nil)
-            } else {
+            guard let statsCollection = result else {
                 completion(nil, error)
+                return
             }
+            
+            var dailyData: [Date: Double] = [:]
+            for statistics in statsCollection.statistics() {
+                let date = statistics.startDate
+                let value = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
+                dailyData[date] = value
+            }
+            
+            completion(dailyData, nil)
         }
         healthStore.execute(query)
     }
