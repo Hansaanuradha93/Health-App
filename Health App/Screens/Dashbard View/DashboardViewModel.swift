@@ -15,6 +15,7 @@ enum DashboardSelectedTab {
 final class DashboardViewModel: ObservableObject {
     @Published var selectedTab: DashboardSelectedTab = .steps
     @Published var dailyStepCounts: [Date: Double] = [:]
+    @Published var dailyWeights: [Date: Double] = [:]
     
     func fetchSteps() {
         HealthKitManager.shared.fetchDailySteps { dailyStepCounts, error in
@@ -29,6 +30,23 @@ final class DashboardViewModel: ObservableObject {
             
             DispatchQueue.main.async {
                 self.dailyStepCounts = dailyStepCounts
+            }
+        }
+    }
+    
+    func fetchWeights() {
+        HealthKitManager.shared.fetchDailyWeights { dailyWeights, error in
+            if let error {
+                printError(error)
+                return
+            }
+            
+            guard let dailyWeights else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.dailyWeights = dailyWeights
             }
         }
     }
