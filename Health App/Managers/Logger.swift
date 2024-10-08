@@ -15,6 +15,10 @@ func printError(_ error: Error?) {
     Logger.shared.printError(error)
 }
 
+func printError(_ message: String) {
+    Logger.shared.printError(message)
+}
+
 final class Logger {
     static let shared = Logger()
     
@@ -26,5 +30,9 @@ final class Logger {
     
     func printError(_ error: Error?) {
         print("🔴 \(error?.localizedDescription ?? "")")
+    }
+    
+    func printError(_ message: String) {
+        print("🔴 \(message)")
     }
 }

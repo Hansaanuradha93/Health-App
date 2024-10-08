@@ -33,7 +33,9 @@ struct PermissionRequestView: View {
                 Spacer()
                 
                 Button("Connect HealthKit") {
-                    viewModel.requestReadAuthorization()
+                    Task {
+                        await viewModel.requestReadAuthorization()
+                    }
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.red)

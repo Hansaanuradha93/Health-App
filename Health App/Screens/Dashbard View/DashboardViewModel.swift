@@ -18,29 +18,21 @@ final class DashboardViewModel: ObservableObject {
     @Published var dailyStepCounts: [Date: Double] = [:]
     @Published var dailyWeights: [Date: Double] = [:]
     
-    func fetchSteps() {
-        HealthKitManager.shared.fetchDailySteps { dailyStepCounts, error in
-            if let error {
-                printError(error)
-                return
-            }
-            
-            guard let dailyStepCounts else { return }
-            
-            self.dailyStepCounts = dailyStepCounts
+    func fetchSteps() async {
+        do {
+            let steps = try await HealthKitManager.shared.fetchDailySteps()
+            dailyStepCounts = steps
+        } catch {
+            printError(error)
         }
     }
     
-    func fetchWeights() {
-        HealthKitManager.shared.fetchDailyWeights { dailyWeights, error in
-            if let error {
-                printError(error)
-                return
-            }
-            
-            guard let dailyWeights else { return }
-            
-            self.dailyWeights = dailyWeights
+    func fetchWeights() async {
+        do {
+            let weights = try await HealthKitManager.shared.fetchDailyWeights()
+            dailyWeights = weights
+        } catch {
+            printError(error)
         }
     }
 }

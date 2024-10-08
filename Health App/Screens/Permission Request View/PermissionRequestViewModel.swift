@@ -10,19 +10,20 @@ import HealthKit
 
 @MainActor
 final class PermissionRequestViewModel: ObservableObject {
-    
     @Published var isPermissionGranted = false
     
-    func requestReadAuthorization() {
-        HealthKitManager.shared.requestReadAuthorization { [weak self] success, error in
+    func requestReadAuthorization() async {
+        do {
+            let success = try await HealthKitManager.shared.requestReadAuthorization()
+            isPermissionGranted = success
             if success {
                 printInfo(with: "HealthKit read authorization granted")
-                self?.isPermissionGranted = true
             } else {
-                printError(error)
-                self?.requestReadAuthorization()
-                self?.isPermissionGranted = false
+                printError("HealthKit read authorization failed")
             }
+        } catch {
+            printError(error)
+            isPermissionGranted = false
         }
     }
 }

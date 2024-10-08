@@ -6,6 +6,12 @@
 
 import HealthKit
 
+// MARK: HealthKitError
+enum HealthKitError: Error {
+    case unauthorized
+}
+
+// MARK: - HealthKitManager
 final class HealthKitManager {
     static let shared = HealthKitManager()
     private let healthStore = HKHealthStore()
@@ -15,51 +21,55 @@ final class HealthKitManager {
 
 // MARK: - Public Methods
 extension HealthKitManager {
-    func fetchDailySteps(completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        fetchHealthData(for: .stepCount, completion: completion)
+    func fetchDailySteps() async throws -> [Date: Double] {
+        try await fetchHealthData(for: .stepCount)
     }
     
-    func fetchDailyWeights(completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        fetchHealthData(for: .bodyMass, completion: completion)
+    func fetchDailyWeights() async throws -> [Date: Double] {
+        try await fetchHealthData(for: .bodyMass)
     }
 
-    func requestReadAuthorization(completion: @escaping (Bool, Error?) -> Void) {
+    func requestReadAuthorization() async throws -> Bool {
         let readTypes: Set = [
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
             HKObjectType.quantityType(forIdentifier: .bodyMass)!
         ]
-        requestAuthorization(toWrite: nil, toRead: readTypes, completion: completion)
+        return try await requestAuthorization(toWrite: nil, toRead: readTypes)
     }
 
-    func requestWriteAuthorization(for type: HKQuantityTypeIdentifier, completion: @escaping (Bool, Error?) -> Void) {
+    func requestWriteAuthorization(for type: HKQuantityTypeIdentifier) async throws -> Bool {
         let writeTypes: Set = [
             HKObjectType.quantityType(forIdentifier: type)!
         ]
-        requestAuthorization(toWrite: writeTypes, toRead: nil, completion: completion)
+        return try await requestAuthorization(toWrite: writeTypes, toRead: nil)
     }
 }
 
 // MARK: - Private Methods
 private extension HealthKitManager {
-    func fetchHealthData(for identifier: HKQuantityTypeIdentifier, completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        requestReadAuthorization { [weak self] isAuthorized, error in
-            guard let self = self,
-                    isAuthorized,
-                    let quantityType = HKQuantityType.quantityType(forIdentifier: identifier) else {
-                completion(nil, error)
-                return
-            }
-            
-            let (startDate, endDate) = Calendar.current.getLast30Days()
-            let query = self.createQuery(for: quantityType, from: startDate, to: endDate)
-            
-            self.executeHealthQuery(query, completion: completion)
+    func fetchHealthData(for identifier: HKQuantityTypeIdentifier) async throws -> [Date: Double] {
+        let isAuthorized = try await requestReadAuthorization()
+        
+        guard isAuthorized,
+              let quantityType = HKQuantityType.quantityType(forIdentifier: identifier) else {
+            throw HealthKitError.unauthorized
         }
+        
+        let (startDate, endDate) = Calendar.current.getLast30Days()
+        let query = createQuery(for: quantityType, from: startDate, to: endDate)
+        
+        return try await executeHealthQuery(query)
     }
     
-    func requestAuthorization(toWrite writeTypes: Set<HKSampleType>?, toRead readTypes: Set<HKObjectType>?, completion: @escaping (Bool, Error?) -> Void) {
-        healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { success, error in
-            completion(success, error)
+    func requestAuthorization(toWrite writeTypes: Set<HKSampleType>?, toRead readTypes: Set<HKObjectType>?) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { success, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: success)
+                }
+            }
         }
     }
 
@@ -76,22 +86,24 @@ private extension HealthKitManager {
         )
     }
 
-    func executeHealthQuery(_ query: HKStatisticsCollectionQuery, completion: @escaping ([Date: Double]?, Error?) -> Void) {
-        query.initialResultsHandler = { _, result, error in
-            guard let statsCollection = result else {
-                completion(nil, error)
-                return
+    func executeHealthQuery(_ query: HKStatisticsCollectionQuery) async throws -> [Date: Double] {
+        try await withCheckedThrowingContinuation { continuation in
+            query.initialResultsHandler = { _, result, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else if let statsCollection = result {
+                    var dailyData: [Date: Double] = [:]
+                    for statistics in statsCollection.statistics() {
+                        let date = statistics.startDate
+                        let value = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
+                        dailyData[date] = value
+                    }
+                    continuation.resume(returning: dailyData)
+                } else {
+                    continuation.resume(returning: [:])
+                }
             }
-            
-            var dailyData: [Date: Double] = [:]
-            for statistics in statsCollection.statistics() {
-                let date = statistics.startDate
-                let value = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0.0
-                dailyData[date] = value
-            }
-            
-            completion(dailyData, nil)
+            healthStore.execute(query)
         }
-        healthStore.execute(query)
     }
 }
