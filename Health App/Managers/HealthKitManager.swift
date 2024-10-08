@@ -18,21 +18,35 @@ final class HealthKitManager {
 extension HealthKitManager {
     func fetchDailySteps(completion: @escaping ([Date: Double]?, Error?) -> Void) {
         requestHealthKitReadAuthorization { [weak self] status, _ in
-            guard let self else {
+            guard let self,
+                  status,
+                  let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else {
                 return
             }
+                        
+            let (startDate, endDate) = Calendar.current.getLast30Days()
             
-            if status {
-                let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
-                
-                let (startDate, endDate) = Calendar.current.getLast30Days()
-                
-                let query = self.getQuery(from: startDate, till: endDate, with: stepType)
-                
-                self.fetchHealthData(with: query, completion: completion)
-                
+            let query = self.getQuery(from: startDate, till: endDate, with: stepType)
+            
+            self.fetchHealthData(with: query, completion: completion)
+            
+            return
+        }
+    }
+    
+    func fetchDailyWeights(completion: @escaping ([Date: Double]?, Error?) -> Void) {
+        requestHealthKitReadAuthorization { [weak self] status, _ in
+            guard let self,
+                  status,
+                  let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass) else {
                 return
             }
+                        
+            let (startDate, endDate) = Calendar.current.getLast30Days()
+
+            let query = self.getQuery(from: startDate, till: endDate, with: weightType)
+
+            self.fetchHealthData(with: query, completion: completion)
         }
     }
 }
