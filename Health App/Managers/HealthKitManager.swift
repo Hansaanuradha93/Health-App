@@ -72,15 +72,24 @@ private extension HealthKitManager {
             }
         }
     }
-
+    
     func createQuery(for quantityType: HKQuantityType, from startDate: Date, to endDate: Date) -> HKStatisticsCollectionQuery {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         let anchorDate = Calendar.current.getAnchorDate(for: endDate)
         
+        let options: HKStatisticsOptions = {
+            if quantityType == HKQuantityType.quantityType(forIdentifier: .stepCount) {
+                return .cumulativeSum
+            } else if quantityType == HKQuantityType.quantityType(forIdentifier: .bodyMass) {
+                return .discreteAverage // Use average for body mass (weight)
+            }
+            return []
+        }()
+        
         return HKStatisticsCollectionQuery(
             quantityType: quantityType,
             quantitySamplePredicate: predicate,
-            options: .cumulativeSum,
+            options: options,
             anchorDate: anchorDate,
             intervalComponents: DateComponents(day: 1)
         )

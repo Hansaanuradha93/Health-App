@@ -25,11 +25,25 @@ struct DashboardView: View {
                 
                 if viewModel.selectedTab == .steps {
                     StepsView()
-                } else {
+                } else if viewModel.selectedTab == .weight {
                     WeightView()
                 }
             }
             .navigationTitle("Dashboard")
+            .onAppear {
+                Task {
+                    await viewModel.fetchSteps()
+                }
+            }
+            .onChange(of: viewModel.selectedTab) { _, newTab in
+                Task {
+                    if newTab == .steps {
+                        await viewModel.fetchSteps()
+                    } else if newTab == .weight {
+                        await viewModel.fetchWeights()
+                    }
+                }
+            }
         }
     }
 }
