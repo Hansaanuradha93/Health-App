@@ -11,7 +11,7 @@ import SwiftUI
 struct Health_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            PermissionRequestView()
+            DashboardView()
         }
     }
 }
