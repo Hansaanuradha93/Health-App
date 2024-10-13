@@ -96,7 +96,24 @@ struct StepsBarChartView: View {
                 }
             }
         }
-        .chartYScale(domain: 0...30000)
+        .chartYAxis {
+            AxisMarks(position: .trailing) { value in
+                /// Add seperator line
+                AxisGridLine()
+                    .foregroundStyle(.gray.opacity(0.3))
+                
+                AxisValueLabel {
+                    if let intValue = value.as(Int.self) {
+                        /// Format large numbers as "10k", "15k", etc.
+                        if intValue > 0 {
+                            Text(NumberFormatter.shortStyle.string(from: NSNumber(value: intValue)) ?? "")
+                        } else {
+                            Text("\(intValue)")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
