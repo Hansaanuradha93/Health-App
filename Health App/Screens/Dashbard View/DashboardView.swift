@@ -55,7 +55,7 @@ struct DashboardView: View {
 
 // MARK: - StepsView
 struct StepsView: View {
-    @State var data: [Date: Double]
+    var data: [Date: Double]
 
     var body: some View {
         VStack(spacing: 20) {
@@ -69,7 +69,7 @@ struct StepsView: View {
 
 // MARK: - WeightView
 struct WeightView: View {
-    @State var data: [Date: Double]
+    var data: [Date: Double]
 
     var body: some View {
         VStack(spacing: 20) {
@@ -82,7 +82,7 @@ struct WeightView: View {
 }
 
 struct StepsBarChartView: View {
-    @State var data: [Date: Double]
+    var data: [Date: Double]
     
     var body: some View {
         Chart {

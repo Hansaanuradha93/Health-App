@@ -1,5 +1,5 @@
 //
-//  Card View.swift
+//  CardView.swift
 //  Health App
 //
 //  Created by Hansa Wickramanayake on 2024-09-07.
@@ -19,7 +19,7 @@ struct CardView: View {
     var title: String
     var subtitle: String
     var chartType: ChartType
-    @State var data: [Date: Double]
+    var data: [Date: Double]
     
     var body: some View {
         VStack(spacing: 10) {
