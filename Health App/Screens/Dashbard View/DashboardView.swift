@@ -25,7 +25,7 @@ struct DashboardView: View {
                 Spacer()
                 
                 if viewModel.selectedTab == .steps {
-                    StepsView(data: viewModel.dailyStepCounts)
+                    StepsView(data: viewModel.dailyStepCounts, average: viewModel.averageSteps)
                 } else if viewModel.selectedTab == .weight {
                     WeightView(data: viewModel.dailyWeights)
                 }
@@ -56,10 +56,11 @@ struct DashboardView: View {
 // MARK: - StepsView
 struct StepsView: View {
     var data: [Date: Double]
+    var average: String
 
     var body: some View {
         VStack(spacing: 20) {
-            CardView(icon: "figure.walk", title: "Steps", subtitle: "Avg: 0 steps", chartType: .bar, data: data)
+            CardView(icon: "figure.walk", title: "Steps", subtitle: average, chartType: .bar, data: data)
             
             CardView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days", chartType: .circular, data: data)
         }

@@ -8,6 +8,7 @@
 import Foundation
 
 extension NumberFormatter {
+    /// Show the number with 'k' suffix, example: - 10k
     static var shortStyle: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

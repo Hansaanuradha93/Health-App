@@ -18,6 +18,14 @@ final class DashboardViewModel: ObservableObject {
     @Published var dailyStepCounts: [Date: Double] = [:]
     @Published var dailyWeights: [Date: Double] = [:]
     
+    /// Calculate average steps
+    var averageSteps: String {
+        let totalSteps = dailyStepCounts.values.reduce(0, +)
+        let average = dailyStepCounts.isEmpty ? 0 : totalSteps / Double(dailyStepCounts.count)
+        let roundedAverage = average.rounded()
+        return "Avg: \(roundedAverage.formatWithCommas()) steps"
+    }
+    
     func fetchSteps() async {
         do {
             let steps = try await HealthKitManager.shared.fetchDailySteps()
