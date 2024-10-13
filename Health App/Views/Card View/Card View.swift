@@ -7,10 +7,19 @@
 
 import SwiftUI
 
+enum ChartType {
+    case bar
+    case line
+    case circular
+    case empty
+}
+
 struct CardView: View {
     var icon: String
     var title: String
     var subtitle: String
+    var chartType: ChartType
+    @State var data: [Date: Double]
     
     var body: some View {
         VStack(spacing: 10) {
@@ -46,7 +55,16 @@ struct CardView: View {
             
             Spacer()
             
-            EmptyView(icon: "chart.bar", title: "No Step Data", subtitle: "Add step count to the Health App")
+            switch chartType {
+            case .bar:
+                StepsBarChartView(data: data)
+            case .line:
+                LineChartView()
+            case .circular:
+                CircularChartView()
+            case .empty:
+                EmptyView(icon: "chart.bar", title: "No Step Data", subtitle: "Add step count to the Health App")
+            }
             
             Spacer()
         }
@@ -57,5 +75,5 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(icon: "figure.walk", title: "Steps", subtitle: "Avg: 0 steps")
+    CardView(icon: "figure.walk", title: "Steps", subtitle: "Avg: 0 steps", chartType: .bar, data: [:])
 }

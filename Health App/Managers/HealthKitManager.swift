@@ -81,7 +81,7 @@ private extension HealthKitManager {
             if quantityType == HKQuantityType.quantityType(forIdentifier: .stepCount) {
                 return .cumulativeSum
             } else if quantityType == HKQuantityType.quantityType(forIdentifier: .bodyMass) {
-                return .discreteAverage // Use average for body mass (weight)
+                return .discreteAverage
             }
             return []
         }()
