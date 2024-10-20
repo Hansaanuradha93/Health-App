@@ -194,16 +194,23 @@ struct StepsBarChartView: View {
                     .foregroundStyle(.gray.opacity(0.3))
                 
                 AxisValueLabel {
-                    if let intValue = value.as(Int.self) {
-                        /// Format large numbers as "10k", "15k", etc.
-                        if intValue > 0 {
-                            Text(NumberFormatter.shortStyle.string(from: NSNumber(value: intValue)) ?? "")
-                        } else {
-                            Text("\(intValue)")
-                        }
-                    }
+                    YAxisValueLabel(value)
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    func YAxisValueLabel(_ value: AxisValue) -> some View {
+        if let intValue = value.as(Int.self) {
+            /// Format large numbers as "10k", "15k", etc.
+            if intValue > 0 {
+                Text(NumberFormatter.shortStyle.string(from: NSNumber(value: intValue)) ?? "")
+            } else {
+                Text("\(intValue)")
+            }
+        } else {
+            Spacer()
         }
     }
 }
