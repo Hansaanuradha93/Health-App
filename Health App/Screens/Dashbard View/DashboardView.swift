@@ -9,7 +9,6 @@ import SwiftUI
 import Charts
 
 struct DashboardView: View {
-    
     @StateObject private var viewModel = DashboardViewModel()
     
     var body: some View {
@@ -24,9 +23,10 @@ struct DashboardView: View {
                 
                 Spacer()
                 
-                if viewModel.selectedTab == .steps {
+                switch viewModel.selectedTab {
+                case .steps:
                     StepsView(data: viewModel.dailyStepCounts, average: viewModel.averageSteps)
-                } else if viewModel.selectedTab == .weight {
+                case .weight:
                     WeightView(data: viewModel.dailyWeights)
                 }
             }
@@ -119,7 +119,7 @@ struct StepsView: View {
                 
                 Spacer()
                 
-                CircularChartView()
+                DonutChartView()
                 
                 Spacer()
             }
@@ -173,6 +173,10 @@ struct StepsBarChartView: View {
     
     var body: some View {
         Chart {
+            RuleMark(y: .value("Average", average))
+                .foregroundStyle(.pink.opacity(0.6))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
+            
             ForEach(data.keys.sorted(), id: \.self) { date in
                 if let steps = data[date] {
                     BarMark(
@@ -210,8 +214,8 @@ struct LineChartView: View {
     }
 }
 
-struct CircularChartView: View {
+struct DonutChartView: View {
     var body: some View {
-        Text("Circular Chart")
+        Text("Donut Chart")
     }
 }
