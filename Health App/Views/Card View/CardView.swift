@@ -30,13 +30,13 @@ struct CardView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30, height: 30)
-                            .foregroundColor(.red)
+                            .foregroundStyle(.pink)
                             .fontWeight(.regular)
                         
                         Text(title)
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .foregroundStyle(.red)
+                            .foregroundStyle(.pink)
                     }
                     
                     Text(subtitle)

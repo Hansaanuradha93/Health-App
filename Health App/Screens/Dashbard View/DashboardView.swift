@@ -93,7 +93,7 @@ struct StepsBarChartView: View {
                         x: .value("Date", date, unit: .day),
                         y: .value("Steps", steps)
                     )
-                    .foregroundStyle(Color.red)
+                    .foregroundStyle(.pink.gradient)
                 }
             }
         }
