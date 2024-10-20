@@ -13,16 +13,14 @@ struct DashboardView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 20) {
                 Picker("", selection: $viewModel.selectedTab) {
                     Text("Steps").tag(DashboardSelectedTab.steps)
                     Text("Weight").tag(DashboardSelectedTab.weight)
                 }
                 .pickerStyle(.segmented)
-                .padding()
-                
-                Spacer()
-                
+                .padding(.horizontal)
+                                
                 switch viewModel.selectedTab {
                 case .steps:
                     StepsView(data: viewModel.dailyStepCounts, average: viewModel.averageSteps)
@@ -98,7 +96,6 @@ struct StepsView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            
             /// Bar Chart: - Steps
             VStack(spacing: 10) {
                 CardHeaderView(icon: "figure.walk", title: "Steps", subtitle: "Avg: \(average.formatWithCommas()) steps")
@@ -111,23 +108,23 @@ struct StepsView: View {
             }
             .padding()
             .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
-            
+            .cornerRadius(8)
+
             /// Donut Chart: Steps
             VStack(spacing: 10) {
                 CardHeaderView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days")
                 
                 Spacer()
                 
-                DonutChartView()
+                DonutChartView(data: Calendar.current.getLast7DaysData(from: data))
                 
                 Spacer()
             }
             .padding()
             .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+            .cornerRadius(8)
         }
-        .padding()
+        .padding(.horizontal)
     }
 }
 
@@ -148,8 +145,8 @@ struct WeightView: View {
             }
             .padding()
             .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
-            
+            .cornerRadius(8)
+
             VStack(spacing: 10) {
                 CardHeaderView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days")
                 
@@ -161,12 +158,32 @@ struct WeightView: View {
             }
             .padding()
             .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+            .cornerRadius(8)
         }
-        .padding()
+        .padding(.horizontal)
     }
 }
 
+// MARK: - DonutChartView
+struct DonutChartView: View {
+    var data: [Date: Double]
+    
+    var body: some View {
+        Chart {
+            ForEach(data.keys.sorted(), id: \.self) { date in
+                if let steps = data[date] {
+                    SectorMark(angle: .value("Steps", steps),
+                               innerRadius: .ratio(0.6),
+                               angularInset: 6)
+                    .foregroundStyle(.pink.gradient)
+                    .cornerRadius(8)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - StepsBarChartView
 struct StepsBarChartView: View {
     var data: [Date: Double]
     var average: Double
@@ -215,14 +232,9 @@ struct StepsBarChartView: View {
     }
 }
 
+// MARK: - LineChartView
 struct LineChartView: View {
     var body: some View {
         Text("Line Chart")
-    }
-}
-
-struct DonutChartView: View {
-    var body: some View {
-        Text("Donut Chart")
     }
 }
