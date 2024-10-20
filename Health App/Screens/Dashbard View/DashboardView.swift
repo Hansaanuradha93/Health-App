@@ -53,16 +53,79 @@ struct DashboardView: View {
     DashboardView()
 }
 
+struct CardHeaderView: View {
+    var icon: String
+    var title: String
+    var subtitle: String
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                HStack(spacing: 15) {
+                    Image(systemName: icon)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 30, height: 30)
+                        .foregroundStyle(.pink)
+                        .fontWeight(.regular)
+                    
+                    Text(title)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.pink)
+                }
+                
+                Text(subtitle)
+                    .fontWeight(.regular)
+                    .foregroundStyle(.gray)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "arrow.right")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 15, height: 15)
+                .foregroundStyle(.tertiary)
+        }
+    }
+}
+
 // MARK: - StepsView
 struct StepsView: View {
     var data: [Date: Double]
-    var average: String
+    var average: Double
 
     var body: some View {
         VStack(spacing: 20) {
-            CardView(icon: "figure.walk", title: "Steps", subtitle: average, chartType: .bar, data: data)
             
-            CardView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days", chartType: .circular, data: data)
+            /// Bar Chart: - Steps
+            VStack(spacing: 10) {
+                CardHeaderView(icon: "figure.walk", title: "Steps", subtitle: "Avg: \(average.formatWithCommas()) steps")
+                
+                Spacer()
+                
+                StepsBarChartView(data: data, average: average)
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
+            
+            /// Donut Chart: Steps
+            VStack(spacing: 10) {
+                CardHeaderView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days")
+                
+                Spacer()
+                
+                CircularChartView()
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
         }
         .padding()
     }
@@ -74,9 +137,31 @@ struct WeightView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            CardView(icon: "scalemass", title: "Weight", subtitle: "Avg: 0 kg", chartType: .line, data: data)
+            VStack(spacing: 10) {
+                CardHeaderView(icon: "scalemass", title: "Weight", subtitle: "Avg: 0 kg")
+                
+                Spacer()
+                
+                LineChartView()
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
             
-            CardView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days", chartType: .bar, data: data)
+            VStack(spacing: 10) {
+                CardHeaderView(icon: "calendar", title: "Averages", subtitle: "Last 28 Days")
+                
+                Spacer()
+                
+                LineChartView()
+                
+                Spacer()
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .clipShape(RoundedRectangle(cornerSize: .init(width: 10, height: 10)))
         }
         .padding()
     }
@@ -84,6 +169,7 @@ struct WeightView: View {
 
 struct StepsBarChartView: View {
     var data: [Date: Double]
+    var average: Double
     
     var body: some View {
         Chart {

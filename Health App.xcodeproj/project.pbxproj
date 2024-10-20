@@ -19,7 +19,6 @@
 		A15E2D8C2C8C3071003CA740 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */; };
 		A15E2D8E2C8C3335003CA740 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D8D2C8C3335003CA740 /* DashboardViewModel.swift */; };
 		A15E2D922C8C40E4003CA740 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D912C8C40E4003CA740 /* EmptyView.swift */; };
-		A15E2D952C8C4603003CA740 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15E2D942C8C4603003CA740 /* CardView.swift */; };
 		A179B8812C9C932300B79E80 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A179B8802C9C932300B79E80 /* Logger.swift */; };
 		A1D8F6CE2CB3CAFE00530A66 /* Calendar Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D8F6CD2CB3CAFE00530A66 /* Calendar Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -39,7 +38,6 @@
 		A15E2D8B2C8C3071003CA740 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		A15E2D8D2C8C3335003CA740 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		A15E2D912C8C40E4003CA740 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
-		A15E2D942C8C4603003CA740 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		A179B8802C9C932300B79E80 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A1D8F6CD2CB3CAFE00530A66 /* Calendar Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,7 +165,6 @@
 		A15E2D932C8C45FB003CA740 /* Card View */ = {
 			isa = PBXGroup;
 			children = (
-				A15E2D942C8C4603003CA740 /* CardView.swift */,
 			);
 			path = "Card View";
 			sourceTree = "<group>";
@@ -253,7 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A14518D82CBC03F60021780B /* NumberFormatter Extensions.swift in Sources */,
-				A15E2D952C8C4603003CA740 /* CardView.swift in Sources */,
 				A15D1C182C88BB6D00A115DF /* PermissionRequestView.swift in Sources */,
 				A1D8F6CE2CB3CAFE00530A66 /* Calendar Extensions.swift in Sources */,
 				A15D1C162C88BB6D00A115DF /* Health_AppApp.swift in Sources */,

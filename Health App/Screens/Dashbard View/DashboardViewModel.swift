@@ -19,11 +19,10 @@ final class DashboardViewModel: ObservableObject {
     @Published var dailyWeights: [Date: Double] = [:]
     
     /// Calculate average steps
-    var averageSteps: String {
+    var averageSteps: Double {
         let totalSteps = dailyStepCounts.values.reduce(0, +)
         let average = dailyStepCounts.isEmpty ? 0 : totalSteps / Double(dailyStepCounts.count)
-        let roundedAverage = average.rounded()
-        return "Avg: \(roundedAverage.formatWithCommas()) steps"
+        return average.rounded()
     }
     
     func fetchSteps() async {
