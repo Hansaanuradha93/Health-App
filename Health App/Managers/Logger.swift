@@ -11,6 +11,10 @@ func printInfo(with message: String) {
     Logger.shared.printInfo(with: message)
 }
 
+func printInfo(with object: AnyObject) {
+    Logger.shared.printInfo(with: object)
+}
+
 func printError(_ error: Error?) {
     Logger.shared.printError(error)
 }
@@ -26,6 +30,10 @@ final class Logger {
     
     func printInfo(with message: String) {
         print("🟢 \(message)")
+    }
+    
+    func printInfo(with object: AnyObject) {
+        print("🟢 \(object)")
     }
     
     func printError(_ error: Error?) {
